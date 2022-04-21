@@ -1,0 +1,10 @@
+numpy
+scikit-learn
+scikit-image
+matplotlib
+opencv
+seaborn
+pandas
+openpyxl
+xlrd
+tensorflow-gpu
