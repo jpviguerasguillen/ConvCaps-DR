@@ -1,4 +1,4 @@
-# Deep Convolutional Capsules with Dynamic-Routing (DR-ConvCaps)
+# Deep Convolutional Capsules with Dynamic-Routing (ConvCaps-DR)
 #### by Juan P. Vigueras-Guillén et al. (https://www.researchgate.net/profile/Juan-Vigueras-Guillen) 
 
 The paper will be available soon.
