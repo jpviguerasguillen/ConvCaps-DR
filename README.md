@@ -68,33 +68,33 @@ The code contains several types of networks. The user should change (within the 
 
 &nbsp;
 
-### Experiments
+## Experiments
 
 For all experiments, we tested several networks with different number of capsule layers (from 2 layers [only Primary- and Class-capsule layers] to 9 layers [7 mid-capsule layers]). Below, we depict the results for the Leukocyte15 dataset, which was divided in 5 folds, using 4 folds for training and 1 for testing. The evaluation metrics were Accuracy and F1. Due to the high-unbalance between classes, F1 describes better how the network handle such unbalance. The default network is as depicted in Fig. 1, with 5 CNNs, 32 Prim-Caps, and 8 capsules in the Mid-Cap layers (the number of Mid-Caps layers is evaluated in all experiments (x-axis in Fig. 2)), being the capsules of size 16. 
 
 The experiments were:
 
-1. Number of CNNs: We evaluated whether reducing the number of CNNs would be beneficial. To this end, we increased the strides to 2 in a capsule layer for each CNN that is removed. We tested networks containing from 2 CNNs to 5 CNNs.
-2. Number of Capsules per Mid-Capsule layer: For the default 5-CNNs network, we evaluated whether the number of mid-capsules would be relevant. For this, we set the same number of capsules for all mid-caps layers.
-3. Dense Connections: To make these experiments computationally feasible, we reduced the size of the default 5-CNNs network: 24 Prim-Caps and 4 Mid-Caps. Then, we added dense connections within the capsule section. Specifically, we evaluted different sizes of the dense connections, where a "N-dense-connection" means that a capsule layer receives the features of the N previous capsule layers. For instance, for a 2-dense connections in a 4-capsule-layer network (Prim-, Mid1, Mid2, and Class layers), the Mid2 will have as input the features of Prim and Mid1, and Class will have the input of Mid1 and Mid2. If it were a 3-dense connections, only the Class layer will have as input a dense connection with the features of Prim, Mid1, and Mid2. Two variations were evaluated:
-  * We add the dense connections to the default network without changing the number of capsules. This would increase the weights: the larger the dense connection, the larger the number of weights.
-  * We try to have a similar amount of weights for all the networks. For this, we increase the number of Primary Caps and Mid-Caps for the networks with shorter dense connections (or no dense connections at all) such that they all have approximately 4.5M parameters.
-4. Residual Connections: 
-  * For the default 5-CNNs network, we add residual connections in the Mid-Cap section. This entails to have the first residual connection after the 2nd capsule layer. Therefore, it is necessary to have a 4-cap-layer network to have a residual connection.
-  * Fully-Residual: We modify the network such that it has 10 capsules in the Prim-cap layer and all the Mid-cap layers. Considering that the CNN-section is made of ResNeXt blocks, this allows to add residual connections in between all blocks, creating a fully-residual network.
-  * In both cases, we evaluate whether adding a squash function after the residual connection is benefitial.
+1. <b>Number of CNNs</b>: We evaluated whether reducing the number of CNNs would be benefitial. To this end, we increased the strides to 2 in a capsule layer for each CNN that is removed. We tested networks containing from 2 CNNs to 5 CNNs.
+2. <b>Number of Capsules per Mid-Capsule layer</b>: For the default 5-CNNs network, we evaluated whether the number of mid-capsules would be relevant. For this, we set the same number of capsules for all mid-caps layers.
+3. <b>Dense Connections</b>: To make these experiments computationally feasible, we reduced the size of the default 5-CNNs network: 24 Prim-Caps and 4 Mid-Caps. Then, we added dense connections within the capsule section. Specifically, we evaluted different sizes of the dense connections, where a "N-dense-connection" means that a capsule layer receives the features of the N previous capsule layers. For instance, for a 2-dense connections in a 4-capsule-layer network (Prim-, Mid1, Mid2, and Class layers), the Mid2 will have as input the features of Prim and Mid1, and Class will have the input of Mid1 and Mid2. If it were a 3-dense connections, only the Class layer will have as input a dense connection with the features of Prim, Mid1, and Mid2. Two variations were evaluated:
+    * We add the dense connections to the default network without changing the number of capsules. This would increase the weights: the larger the dense connection, the larger the number of weights.
+    * We try to have a similar amount of weights for all the networks. For this, we increase the number of Primary Caps and Mid-Caps for the networks with shorter dense connections (or no dense connections at all) such that they all have approximately 4.5M parameters.
+4. <b>Residual Connections</b>: 
+    * For the default 5-CNNs network, we add residual connections in the Mid-Cap section. This entails to have the first residual connection after the 2nd capsule layer. Therefore, it is necessary to have a 4-cap-layer network to have a residual connection.
+    * Fully-Residual: We modify the network such that it has 10 capsules in the Prim-cap layer and all the Mid-cap layers. Considering that the CNN-section is made of ResNeXt blocks, this allows to add residual connections in between all blocks, creating a fully-residual network.
+    * In both cases, we evaluate whether adding a squash function after the residual connection is benefitial.
 
 &nbsp;
 
 
-### Results on the dataset Leukocyte15
+## Results on the dataset Leukocyte15
 
 The results indicated the following: 
 
-1. A larger CNN-section with a shorter Cap-section yields better results than reducing the CNN-section while adding strides to the Cap-section. This contradicts the assumptions made in the original Cap-nets papers, where (i) they suggested to add only one or two CNNs in the beginning of the network so that the capsule section receives simpler features, and (ii) they suggested that deeper capsule sections would help to encode more complex entities in the image. 
-2. The number of mid-Caps is not very relevant. In fact, the network with only 1 capsule in all Mid-Caps yields similar performance than bigger networks with 10 Mid-Caps. This highlights how powerful capsules can be, where having a single type of capsule in several consecutive layers is enough to later discern between the classes.
-3. The use of dense connections is clearly beneficial. In fact, the "2-dense-connections" network clearly outperform the non-dense network with just a small increase in weights (no need to create larger dense connections, whose number of weights increases substantially). Also, we obseved certain stability in F1 as the depth of the network is increased, whereas the default network with no dense connections has a decrease in F1.
-4. The use of residual connections also provides a slight improvement in performance. 
+* A larger CNN-section with a shorter Cap-section yields better results than reducing the CNN-section while adding strides to the Cap-section. This contradicts the assumptions made in the original Cap-nets papers, where (i) they suggested to add only one or two CNNs in the beginning of the network so that the capsule section receives simpler features, and (ii) they suggested that deeper capsule sections would help to encode more complex entities in the image. 
+* The number of mid-Caps is not very relevant. In fact, the network with only 1 capsule in all Mid-Caps yields similar performance than bigger networks with 10 Mid-Caps. This highlights how powerful capsules can be, where having a single type of capsule in several consecutive layers is enough to later discern between the classes.
+* The use of dense connections is clearly beneficial. In fact, the "2-dense-connections" network clearly outperform the non-dense network with just a small increase in weights (no need to create larger dense connections, whose number of weights increases substantially). Also, we obseved certain stability in F1 as the depth of the network is increased, whereas the default network with no dense connections has a decrease in F1.
+* The use of residual connections also provides a slight improvement in performance. 
 
 &nbsp;
 
