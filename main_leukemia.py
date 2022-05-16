@@ -81,7 +81,7 @@ def launch_experiment(args):
     """                   
     trnPos_img, trnNeg_img, valPos_img, valNeg_img, tst_img, tst_lbl, tst_nam \
         = split_dataset_leukemia(args) 
-    model = CapsNet_DR(args.input_shape, args=args)
+    model = CapsNet_DR(args.input_shape, args=args) # Change here the network
     model.summary()
     if args.transfer_learning:
         model.load_weights(args.save_folder + args.transfer_learning, 
@@ -101,12 +101,13 @@ if __name__ == '__main__':
     # Only the arguments that need to be changed regularly are added in the 
     # parser. Otherwise, they are defined below.
     parser = argparse.ArgumentParser(description='Tensorflow-Keras DR-ConvCaps')
-    parser.add_argument('--data_folder', type=str, #required=True,
-                        default='/home/kmhc153/Tensorflow/04_Leukemia/Data/',
-                        help='The directory for the data.')
+    parser.add_argument('--data_folder', type=str, required=True,
+                        help='The directory of the data.')
+    parser.add_argument('--save_folder', type=str, required=True,
+                        help='The directory where to save the data.')
     parser.add_argument('--weights', type=str, default='',
                         help='The mame of trained_model.h5; Set to "" for none.' 
-                             'Uses path from args.save_folder')
+                             'It uses the path of save_folder')
     parser.add_argument('--transfer_learning', type=str, default='',
                         help='The model.h5 from which to do transfer learning.' 
                              'Set to "" for none. Uses path args.save_folder')
@@ -175,8 +176,6 @@ if __name__ == '__main__':
     args.pos_folder = args.data_folder + 'Training/all/'
     args.tst_folder = args.data_folder + 'C-NMC_test_prelim_phase_data/'
     args.tst_labels = args.data_folder + 'C-NMC_test_prelim_phase_data_labels.csv'
-    args.save_folder = '/scratch/kmhc153/Tensorflow/04_Leukemia/Data/' +  \
-                       'Leukemia_DR-Caps_v1_5CNNsi_6LayCaps_32-8x-2_TL/'
     
     if not os.path.exists(args.save_folder):
         print('Creating the folder... ')

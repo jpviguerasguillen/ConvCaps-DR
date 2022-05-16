@@ -90,9 +90,10 @@ if __name__ == '__main__':
     # Only the arguments that need to be changed regularly are added in the 
     # parser. Otherwise, they are defined below.
     parser = argparse.ArgumentParser(description='Tensorflow-Keras DR-ConvCaps')
-    parser.add_argument('--data_folder', type=str, #required=True,
-                        default='/home/kmhc153/Tensorflow/07_Myeloid/Data/',
-                        help='The directory for the data.')
+    parser.add_argument('--data_folder', type=str, required=True,
+                        help='The directory of the data.')
+    parser.add_argument('--save_folder', type=str, required=True,
+                        help='The directory where to save the data.')
     parser.add_argument('--weights', type=str, default='',
                         help='The mame of trained_model.h5; Set to "" for none.' 
                              'Uses path from args.save_folder')
@@ -187,8 +188,7 @@ if __name__ == '__main__':
     # can be changed in train_model.py)
     args.save_model = True
     args.save_variables = True
-    args.save_folder = '/scratch/kmhc153/Tensorflow/07_Myeloid/Data/' +  \
-        'Myeloid_DR-Caps_v1_5CNNsi_6LayCaps_32-8x-15/Fold_' + \
+    args.save_folder = args.save_folder + 'Fold_' + \
         str(args.test_fold).zfill(2) + '/'
     if not os.path.exists(args.save_folder):
         print('Creating the folder... ')
