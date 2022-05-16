@@ -1,7 +1,10 @@
+![Maturity level-0](https://img.shields.io/badge/Maturity%20Level-ML--0-red)
+
 # Deep Convolutional Capsules with Dynamic-Routing (ConvCaps-DR)
 #### by Juan P. Vigueras-Guillén et al. (https://www.researchgate.net/profile/Juan-Vigueras-Guillen) 
 
 The paper will be available soon.
+
 A previous paper, which explores some of the possibilities of CapsNets, can be found here: https://arxiv.org/abs/2108.02644
 
 &nbsp;
@@ -29,46 +32,39 @@ The default network has 5 CNNs: one simple convolutional block followed by 4 Res
 ## Getting Started Guide
 
 ### Install Required Packages
-This repo of code is written for Keras using the TensorFlow backend (ver. 2.4). Please install all required packages before using this code.
+This repo of code is written for Keras using the TensorFlow backend (ver. 2.4.1). Please install all required packages before using this code.
 ```bash
 pip install -r requirements.txt
 ```
 
-### Main File
-
-From the main files (the different main_xxx.py) you can train and test various networks. Simply set the ```--train``` and ```--test``` to 0 or 1 to turn these off or on respectively. Check the folders to load the dataset (in the arguments of the main file) and to save the results (at the end of the main file). 
-
-
-### Citation
-
-If you use significant portions of our code or ideas from our paper in your research, please cite our work:
+The packages are:
 ```
-@article{vigueras2022caps,
-  title={In development},
-  author={Juan P. Vigueras-Guillén, Ola Engkvist, and Frank Seeliger},
-  journal={arXiv preprint ...},
-  year={2022}
-}
+tensorflow-gpu==2.4.1
+numpy==1.19.5
+scikit-learn==0.23.2
+scikit-image==0.17.2
+matplotlib==3.3.4
+opencv==4.5.5
+seaborn==0.11.1
+pandas==1.0.1
+openpyxl==3.0.6
+xlrd==1.2.0
 ```
 
-### Questions or Comments
+### How to run the code
 
-Please direct any questions or comments to me; I am happy to help in any way I can. You can email me directly at J.P.ViguerasGuillen@gmail.com
-
-&nbsp;
+From the main files (the different *main_xxx.py*), the user can train and test various networks: set the arguments ```--train``` and ```--test``` to 0 or 1 to turn these off or on respectively. The user needs to modify the code to indicate the type of network and its parameters (see next section). It is necessary to introduce the paths to the data folder and the saving folder as arguments (or modify the main file if prefered). If the network weights are introduced as argument, the program will look for them in the saving folder (modify the code if prefered). 
 
 
-## Code
+### Code details
 
-The code contains several types of networks. The user should change (within the <em>xxx_main.py</em> file) the type to use, properly modifying the parameters of the network to suit the desired network (to change also within the <em>xxx_main.py</em>). The available networks can be found in the files <em>networks_xxx.py</em>, which access the Capsule functions (in <em>convcaps_dr.py</em> or <em>convcaps_em.py</em>) and the CNN functions (<em>cnn_blocks.py</em>). Types of networks:
+The user should manually change the type of network to use (within the <em>xxx_main.py</em> file), calling the desired network-function. The available networks can be found in the files <em>networks_xxx.py</em>, which access the Capsule functions (in <em>convcaps_dr.py</em> or <em>convcaps_em.py</em>) and the CNN functions (<em>cnn_blocks.py</em>). Moreover, the user should manually modify the parameters of the capsule section (number of capsules, size of the capsules, strides and window of the convolutional capsules, iteration of the routing algorithm, ...) within the <em>xxx_main.py</em> file too (note that the parameters of the CNN section are set in the network-functions as these remained the same in the majority of the experiments). The types of networks are:
 * <b>Type of routing</b>: This repository contains the Dynamic Routing (DR) and the Expectation-Maximization (EM) algorithms. However, the experiments were done with the DR algorithm since it provided slightly better results.
 * <b>Type of connections within the Capsule section</b>: Default CapsNet, CapsNets with dense connections, and Capsnets with residual connections.
 * <b>Parallel CapsNets</b> (from paper https://arxiv.org/abs/2108.02644): These networks branch the CNN section such that it creates several branches ending with a single Mid-Cap, which are then concatenated to route it to the final class-layer. These can be found in the files with the word <em>parallel</em> in it.
 
 
-&nbsp;
-
-## Experiments
+### Experiments
 
 For all experiments, we tested several networks with different number of capsule layers (from 2 layers [only Primary- and Class-capsule layers] to 9 layers [7 mid-capsule layers]). Below, we depict the results for the Leukocyte15 dataset, which was divided in 5 folds, using 4 folds for training and 1 for testing. The evaluation metrics were Accuracy and F1. Due to the high-unbalance between classes, F1 describes better how the network handle such unbalance. The default network is as depicted in Fig. 1, with 5 CNNs, 32 Prim-Caps, and 8 capsules in the Mid-Cap layers (the number of Mid-Caps layers is evaluated in all experiments (x-axis in Fig. 2)), being the capsules of size 16. 
 
@@ -84,10 +80,9 @@ The experiments were:
     * Fully-Residual: We modify the network such that it has 10 capsules in the Prim-cap layer and all the Mid-cap layers. Considering that the CNN-section is made of ResNeXt blocks, this allows to add residual connections in between all blocks, creating a fully-residual network.
     * In both cases, we evaluate whether adding a squash function after the residual connection is benefitial.
 
-&nbsp;
 
 
-## Results on the dataset Leukocyte15
+### Results on the dataset Leukocyte15
 
 The results indicated the following: 
 
@@ -106,5 +101,40 @@ The results indicated the following:
 </p>
 
 &nbsp;
+
+
+## Citation
+
+If you use significant portions of our code or ideas from our paper in your research, please cite our work. 
+
+```
+@inproceedings{vigueras2021parallelcaps,
+  author    = "Vigueras-Guillén, Juan P. and Patra, Arijit and Engkvist, Ola and Seeliger, Frank",
+  title     = "Parallel capsule networks for classification of white blood cells",
+  booktitle = "Medical Image Computing and Computer Assisted Intervention - MICCAI 2021",
+  series    = "Lecture Notes in Computer Science",
+  volume    = "12907",
+  pages     = "pp 743--752",
+  publisher = "Springer, Cham",
+  year      = 2021
+}
+```
+
+The publication for the specific work in this repository will be made available soon.
+
+
+### Questions or Comments
+
+Please direct any questions or comments to me; I am happy to help in any way I can. You can email me directly at J.P.ViguerasGuillen@gmail.com
+
+
+
+
+
+
+
+
+
+
 
 
