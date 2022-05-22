@@ -1,10 +1,12 @@
 ![Maturity level-0](https://img.shields.io/badge/Maturity%20Level-ML--0-red)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Arxiv](https://img.shields.io/badge/ArXiv-2108.02644-orange.svg)](https://arxiv.org/abs/2108.02644)
+
 
 # Deep Convolutional Capsules with Dynamic-Routing (ConvCaps-DR)
 #### by Juan P. Vigueras-Guillén et al. (https://www.researchgate.net/profile/Juan-Vigueras-Guillen) 
 
 The paper will be available soon.
-
 A previous paper, which explores some of the possibilities of CapsNets, can be found here: https://arxiv.org/abs/2108.02644
 
 &nbsp;
